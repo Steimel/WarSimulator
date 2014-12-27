@@ -1,4 +1,4 @@
 WarSimulator
 ============
 
- Simulates war games in order to collect data for random analyses I come up with.
+ Ruby program which simulates war games in order to collect data for random analyses I come up with.
