@@ -6,13 +6,9 @@ class Face
   FACE_NAME_QUEEN = 'Q'
   FACE_NAME_JACK = 'J'
 
-  def initialize(value, name=nil)
+  def initialize(value)
     @value = value
-    if name.nil?
-      @name = FACE::value_to_name(@value)
-    else
-      @name = name
-    end
+    @name = Face::value_to_name(@value)
   end
 
   def is_ace?
