@@ -29,7 +29,7 @@ class Deck
     deck = Deck.new
     (2..14).each do |value|
       4.times do
-        deck.push(Card.new(Face.new(value)))
+        deck.add_to_deck(Card.new(Face.new(value)))
       end
     end
     deck.shuffle
@@ -39,7 +39,7 @@ class Deck
   def self.deal_decks(full_deck)
     deck1 = Deck.new
     deck2 = Deck.new
-    while full_deck.empty?
+    until full_deck.empty?
       deck1.add_to_deck(full_deck.pop_from_deck)
       deck2.add_to_deck(full_deck.pop_from_deck) unless full_deck.empty?
     end
