@@ -20,16 +20,40 @@ class Game
     card1 = @deck1.pop_from_deck
     card2 = @deck2.pop_from_deck
 
+    cards_to_win = [card1, card2]
+
     result = card1.compare(card2)
-    if result > 0
-      @deck1.add_to_deck(card1)
-      @deck1.add_to_deck(card2)
-    elsif result < 0
-      @deck2.add_to_deck(card1)
-      @deck2.add_to_deck(card2)
-    else
+
+    while result == 0
       @wars += 1
-      #TODO war
+      stuck = true
+
+      4.times do
+        unless @deck1.empty?
+          stuck = false
+          card1 = @deck1.pop_from_deck
+          cards_to_win.push(card1)
+        end
+        unless @deck2.empty?
+          stuck = false
+          card2 = @deck2.pop_from_deck
+          cards_to_win.push(card2)
+        end
+      end
+
+      if stuck
+        puts 'Game stuck in infinite war'
+        @winner = -1
+        return
+      end
+
+      result = card1.compare(card2)
+    end
+
+    if result > 0
+      @deck1.add_set_to_deck(cards_to_win)
+    elsif result < 0
+      @deck2.add_set_to_deck(cards_to_win)
     end
 
     @winner = 1 if @deck2.empty?

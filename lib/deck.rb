@@ -9,6 +9,12 @@ class Deck
     @cards.push(card)
   end
 
+  def add_set_to_deck(cards)
+    cards.each do |card|
+      @cards.push(card)
+    end
+  end
+
   def pop_from_deck
     @cards.shift
   end
