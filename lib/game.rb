@@ -17,6 +17,11 @@ class Game
   def play_round
     @rounds += 1
 
+    if @rounds >= 100000 and @rounds <= 100010
+      puts @deck1.size.to_s + ' [][][] ' + @deck2.size.to_s
+    end
+
+
     card1 = @deck1.pop_from_deck
     card2 = @deck2.pop_from_deck
 
@@ -54,6 +59,11 @@ class Game
       @deck1.add_set_to_deck(cards_to_win)
     elsif result < 0
       @deck2.add_set_to_deck(cards_to_win)
+    end
+
+    if (100011..100050).include?(@rounds)
+      puts cards_to_win.inspect.to_s
+      puts result
     end
 
     @winner = 1 if @deck2.empty?

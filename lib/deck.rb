@@ -10,8 +10,8 @@ class Deck
   end
 
   def add_set_to_deck(cards)
-    cards.each do |card|
-      @cards.push(card)
+    cards.shuffle.each do |card|
+      add_to_deck(card)
     end
   end
 
