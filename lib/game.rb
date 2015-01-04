@@ -1,11 +1,15 @@
 class Game
   attr_reader :deck1, :deck2, :winner, :rounds, :wars
 
-  def initialize
+  def initialize(options = {})
     @deck1, @deck2 = Deck::deal_decks(Deck::create_full_deck)
+    @deck1.game = self
+    @deck2.game = self
     @winner = 0
     @rounds = 0
     @wars = 0
+    @options = options
+    @options[:shuffle_winnings] = true unless @options.has_key?(:shuffle_winnings)
   end
 
   def run
@@ -16,10 +20,6 @@ class Game
 
   def play_round
     @rounds += 1
-
-    if @rounds >= 100000 and @rounds <= 100010
-      puts @deck1.size.to_s + ' [][][] ' + @deck2.size.to_s
-    end
 
 
     card1 = @deck1.pop_from_deck
@@ -61,17 +61,16 @@ class Game
       @deck2.add_set_to_deck(cards_to_win)
     end
 
-    if (100011..100050).include?(@rounds)
-      puts cards_to_win.inspect.to_s
-      puts result
-    end
-
     @winner = 1 if @deck2.empty?
     @winner = 2 if @deck1.empty?
   end
 
   def finished?
     @winner != 0
+  end
+
+  def shuffle_winnings
+    @options[:shuffle_winnings] === true
   end
 
 end

@@ -1,5 +1,6 @@
 class Deck
   attr_reader :cards
+  attr_accessor :game
 
   def initialize
     @cards = []
@@ -10,7 +11,8 @@ class Deck
   end
 
   def add_set_to_deck(cards)
-    cards.shuffle.each do |card|
+    cards.shuffle! if game.nil? || game.shuffle_winnings
+    cards.each do |card|
       add_to_deck(card)
     end
   end
