@@ -1,11 +1,19 @@
 class Game
   attr_reader :deck1, :deck2, :winner, :rounds, :wars
 
+  WINNER_GAME_INCOMPLETE = 0
+  WINNER_PLAYER_1 = 1
+  WINNER_PLAYER_2 = 2
+  WINNER_INFINITE_WAR = 3
+  WINNER_INFINITE_ROUNDS = 4
+
+  MAX_ROUNDS = 1000000
+
   def initialize(options = {})
     @deck1, @deck2 = Deck::deal_decks(Deck::create_full_deck)
     @deck1.game = self
     @deck2.game = self
-    @winner = 0
+    @winner = WINNER_GAME_INCOMPLETE
     @rounds = 0
     @wars = 0
     @options = options
@@ -48,7 +56,7 @@ class Game
 
       if stuck
         puts 'Game stuck in infinite war'
-        @winner = -1
+        @winner = WINNER_INFINITE_WAR
         return
       end
 
@@ -61,8 +69,13 @@ class Game
       @deck2.add_set_to_deck(cards_to_win)
     end
 
-    @winner = 1 if @deck2.empty?
-    @winner = 2 if @deck1.empty?
+    @winner = WINNER_PLAYER_1 if @deck2.empty?
+    @winner = WINNER_PLAYER_2 if @deck1.empty?
+
+    if @winner == WINNER_GAME_INCOMPLETE && @rounds > MAX_ROUNDS
+      puts 'Round stuck'
+      @winner = WINNER_INFINITE_ROUNDS
+    end
   end
 
   def finished?
