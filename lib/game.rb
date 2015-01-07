@@ -7,7 +7,7 @@ class Game
   WINNER_INFINITE_WAR = 3
   WINNER_INFINITE_ROUNDS = 4
 
-  MAX_ROUNDS = 1000000
+  MAX_ROUNDS = 10000
 
   def initialize(options = {})
     @deck1, @deck2 = Deck::deal_decks(Deck::create_full_deck)
@@ -72,8 +72,8 @@ class Game
     @winner = WINNER_PLAYER_1 if @deck2.empty?
     @winner = WINNER_PLAYER_2 if @deck1.empty?
 
-    if @winner == WINNER_GAME_INCOMPLETE && @rounds > MAX_ROUNDS
-      puts 'Round stuck'
+    if @winner == WINNER_GAME_INCOMPLETE && @rounds > MAX_ROUNDS && !@options[:shuffle_winnings]
+      #puts 'Round stuck'
       @winner = WINNER_INFINITE_ROUNDS
     end
   end
