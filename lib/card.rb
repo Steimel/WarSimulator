@@ -12,4 +12,8 @@ class Card
     return 1 if @face.is_two? && other_face.is_ace?
     return @face.value <=> other_face.value
   end
+
+  def to_s
+    face.name
+  end
 end
