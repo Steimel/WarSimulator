@@ -18,6 +18,7 @@ class Game
     @wars = 0
     @options = options
     @options[:shuffle_winnings] = true unless @options.has_key?(:shuffle_winnings)
+    @options[:two_beats_ace] = true unless @options.has_key?(:two_beats_ace)
   end
 
   def run
@@ -35,7 +36,7 @@ class Game
 
     cards_to_win = [card1, card2]
 
-    result = card1.compare(card2)
+    result = card1.compare(card2, @options[:two_beats_ace])
 
     while result == 0
       @wars += 1
@@ -60,7 +61,7 @@ class Game
         return
       end
 
-      result = card1.compare(card2)
+      result = card1.compare(card2, @options[:two_beats_ace])
     end
 
     if result > 0
